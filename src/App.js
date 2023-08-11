@@ -1,25 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
 
-function App() {
+const gachaItems = [
+  { name: "アイテム1", rarity: "★" },
+  { name: "アイテム2", rarity: "★★" },
+  { name: "アイテム3", rarity: "★★★" },
+  // ... 他のアイテム
+];
+
+function drawGacha() {
+  const randomIndex = Math.floor(Math.random() * gachaItems.length);
+  return gachaItems[randomIndex];
+}
+
+function Gacha() {
+  const [result, setResult] = useState(null);
+
+  const handleDraw = () => {
+    const drawnItem = drawGacha();
+    setResult(drawnItem);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <button onClick={handleDraw}>Draw Gacha</button>
+      {result && (
+        <div>
+          <h2>{result.name}</h2>
+          <p>Rarity: {result.rarity}</p>
+        </div>
+      )}
     </div>
   );
 }
 
-export default App;
+export default Gacha;
