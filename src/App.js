@@ -1,15 +1,24 @@
 import React, { useState } from "react";
 
 const gachaItems = [
-  { name: "アイテム1", rarity: "★" },
-  { name: "アイテム2", rarity: "★★" },
-  { name: "アイテム3", rarity: "★★★" },
-  // ... 他のアイテム
+  { id: 1, name: "キャラ1", rarity: "★", probability: 0.6 },
+  { id: 2, name: "キャラ2", rarity: "★★", probability: 0.3 },
+  { id: 3, name: "キャラ3", rarity: "★★★", probability: 0.1 },
 ];
 
 function drawGacha() {
-  const randomIndex = Math.floor(Math.random() * gachaItems.length);
-  return gachaItems[randomIndex];
+  let randomNum = Math.random();
+  let cumulativeProbability = 0;
+
+  for (let item of gachaItems) {
+    cumulativeProbability += item.probability;
+    if (randomNum <= cumulativeProbability) {
+      return item;
+    }
+  }
+
+  // ドローされない場合（理論上はありえないが、念のため）
+  return null;
 }
 
 function Gacha() {
